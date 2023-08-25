@@ -18,7 +18,7 @@ app.use(
 let collection = null;
 
 app.listen(8080, async () => {
-  console.log("start member service!");
+  console.log("start user service!");
   console.log("listening...");
   await client.connect();
   collection = client.db("test").collection("users");
@@ -26,10 +26,10 @@ app.listen(8080, async () => {
 
 /** Restful API */
 
-function getData(memberId) {
-  for (const i in members) {
-    if (members[i].id === memberId) {
-      return [i, members[i]];
+function getData(userId) {
+  for (const i in users) {
+    if (users[i].id === userId) {
+      return [i, users[i]];
     }
   }
 }
@@ -53,7 +53,7 @@ app.get("/:id", async (req, res) => {
 app.post("/login", async (req, res) => {
   const userId = req.body.id;
   const userPwd = req.body.password;
-  // const data = getData(memberId);
+  // const data = getData(userId);
   const document = await collection
     .find({ id: userId, password: userPwd })
     .toArray();
@@ -65,13 +65,13 @@ app.post("/login", async (req, res) => {
 
 // create
 app.post("/join", async (req, res) => {
-  const member = {
+  const user = {
     id: req.body.id,
     password: req.body.password,
     name: req.body.name,
     manager: req.body.manager,
   };
-  const result = await collection.insertOne(member);
+  const result = await collection.insertOne(user);
   console.log(result);
   res.send(JSON.stringify(result));
 });

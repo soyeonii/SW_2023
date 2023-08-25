@@ -21,11 +21,11 @@
           }),
         })
           .then((response) => response.json())
-          .then((member) => {
-            if (member.manager) {
+          .then((user) => {
+            if (user.manager) {
               adminLogin();
             } else {
-              memberLogin(member.id);
+              userLogin(user.id);
             }
           });
       }
@@ -33,16 +33,16 @@
       function adminLogin() {
         fetch(`http://localhost:8080/`)
           .then((response) => response.json())
-          .then((members) => {
-            adminPage(members);
+          .then((users) => {
+            adminPage(users);
           });
       }
 
-      function memberLogin(id) {
+      function userLogin(id) {
         fetch(`http://localhost:8080/${id}`)
           .then((response) => response.json())
-          .then((member) => {
-            memberPage(member);
+          .then((user) => {
+            userPage(user);
           });
       }
 
@@ -54,8 +54,8 @@
       function detail(id) {
         fetch(`http://localhost:8080/${id}`)
           .then((response) => response.json())
-          .then((member) => {
-            detailPage(member);
+          .then((user) => {
+            detailPage(user);
           });
       }
 
@@ -88,13 +88,13 @@
             name: document.getElementById("updateName").value,
             manager: document.getElementById("updateManager").checked,
           }),
-        }).then((response) => memberLogin(id));
+        }).then((response) => userLogin(id));
       }
 
       function updateForm(id) {
         fetch(`http://localhost:8080/${id}`)
           .then((response) => response.json())
-          .then((member) => updatePage(member));
+          .then((user) => updatePage(user));
       }
 
       // delete
@@ -110,18 +110,18 @@
       }
 
       //---------화면---------//
-      function adminPage(members) {
+      function adminPage(users) {
         let page =
           '<input type="button" id="logout" value="logout" onclick="logout()" /> <table>';
-        for (let i in members) {
-          page += `<tr><td>${members[i].id}</td><td>${members[i].name}</td><td>${members[i].manager}</td><td><input type="button" value="조회" onclick="detail('${members[i].id}')" /></td><td><input type="button" value="삭제" onclick="remove('${members[i].id}')" /></td></tr>`;
+        for (let i in users) {
+          page += `<tr><td>${users[i].id}</td><td>${users[i].name}</td><td>${users[i].manager}</td><td><input type="button" value="조회" onclick="detail('${users[i].id}')" /></td><td><input type="button" value="삭제" onclick="remove('${users[i].id}')" /></td></tr>`;
         }
         page += "</table>";
         main.innerHTML = page;
       }
 
-      function memberPage(member) {
-        main.innerHTML = `<h1>${member.id}님 반갑습니다.</h1><input type="button" value="logout" onclick="logout()" /> <input type="button" value="update" onclick="updateForm('${member.id}')" />`;
+      function userPage(user) {
+        main.innerHTML = `<h1>${user.id}님 반갑습니다.</h1><input type="button" value="logout" onclick="logout()" /> <input type="button" value="update" onclick="updateForm('${user.id}')" />`;
       }
 
       function loginPage() {
@@ -129,14 +129,14 @@
           '<table><tr><td>ID:</td><td><input type="text" id="loginId" /></td></tr><tr><td>PW:</td><td><input type="password" id="loginPw" /></td></tr></table><input type="button" value="로그인" onclick="login()" /> <input type="button" value="회원가입" onclick="createPage()" />';
       }
 
-      function detailPage(member) {
-        main.innerHTML = `<table><tr><td>ID:</td><td><input type="text" value="${member.id}" readonly /></td></tr><tr><td>PW:</td><td><input type="password" value="${member.password}" readonly /></td></tr><tr><td>NAME:</td><td><input type="text" value="${member.name}" readonly /></td></tr><tr><td></td><td><input type="checkbox" id="detailManager" disabled />관리자입니다.</td></tr></table><input type="button" value="돌아가기" onclick="adminLogin()" />`;
-        document.getElementById("detailManager").checked = member.manager;
+      function detailPage(user) {
+        main.innerHTML = `<table><tr><td>ID:</td><td><input type="text" value="${user.id}" readonly /></td></tr><tr><td>PW:</td><td><input type="password" value="${user.password}" readonly /></td></tr><tr><td>NAME:</td><td><input type="text" value="${user.name}" readonly /></td></tr><tr><td></td><td><input type="checkbox" id="detailManager" disabled />관리자입니다.</td></tr></table><input type="button" value="돌아가기" onclick="adminLogin()" />`;
+        document.getElementById("detailManager").checked = user.manager;
       }
 
-      function updatePage(member) {
-        main.innerHTML = `<table><tr><td>ID:</td><td><input type="text" id="updateId" value="${member.id}" /></td></tr><tr><td>PW:</td><td><input type="password" id="updatePw" value="${member.password}" /></td></tr><tr><td>NAME:</td><td><input type="text" id="updateName" value="${member.name}" /></td></tr><tr><td></td><td><input type="checkbox" id="updateManager" />관리자입니다.</td></tr></table><input type="button" value="수정하기" onclick="update()" />`;
-        document.getElementById("updateManager").checked = member.manager;
+      function updatePage(user) {
+        main.innerHTML = `<table><tr><td>ID:</td><td><input type="text" id="updateId" value="${user.id}" /></td></tr><tr><td>PW:</td><td><input type="password" id="updatePw" value="${user.password}" /></td></tr><tr><td>NAME:</td><td><input type="text" id="updateName" value="${user.name}" /></td></tr><tr><td></td><td><input type="checkbox" id="updateManager" />관리자입니다.</td></tr></table><input type="button" value="수정하기" onclick="update()" />`;
+        document.getElementById("updateManager").checked = user.manager;
       }
 
       function createPage() {
