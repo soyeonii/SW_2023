@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>midtermLSY</title>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+      let memberData, index;
+
+      $(document).ready(function () {
+        loginPage();
+
+        $.ajax({
+          url: "./data.json",
+          success: function (data) {
+            memberData = data.members;
+          },
+          error: function () {
+            console.log("error");
+          },
+        });
+      });
+
+      //---------동작---------//
+      function login() {
+        let loginId = document.getElementById("loginId").value;
+        let loginPw = document.getElementById("loginPw").value;
+        for (let i in memberData) {
+          if (
+            loginId == memberData[i].id &&
+            loginPw == memberData[i].password
+          ) {
+            index = i;
+            if (memberData[i].manager) {
+              adminPage();
+            } else {
+              memberPage();
+            }
+            return;
+          }
+        }
+      }
+
+      function logout() {
+        index = null;
+        loginPage();
+      }
+
+      function create() {
+        let createId = document.getElementById("createId").value;
+        let createPw = document.getElementById("createPw").value;
+        let createName = document.getElementById("createName").value;
+        let createManager = document.getElementById("createManager").checked;
+        let data = {
+          id: createId,
+          password: createPw,
+          name: createName,
+          manager: createManager,
+        };
+        memberData.splice(memberData.length, 0, data);
+        loginPage();
+      }
+
+      function update() {
+        let updateId = document.getElementById("updateId").value;
+        let updatePw = document.getElementById("updatePw").value;
+        let updateName = document.getElementById("updateName").value;
+        let updateManager = document.getElementById("updateManager").checked;
+        memberData[index].id = updateId;
+        memberData[index].password = updatePw;
+        memberData[index].name = updateName;
+        memberData[index].manager = updateManager;
+        memberPage();
+      }
+
+      function remove(index) {
+        memberData.splice(index, 1);
+        adminPage();
+      }
+
+      //---------화면---------//
+      function adminPage() {
+        let page =
+          '<input type="button" id="logout" value="logout" onclick="logout()" /> <table>';
+        for (let i in memberData) {
+          page += `<tr><td>${memberData[i].id}</td><td>${memberData[i].name}</td><td>${memberData[i].manager}</td><td><input type="button" value="조회" onclick="detailPage(${i})" /></td><td><input type="button" value="삭제" onclick="remove(${i})" /></td></tr>`;
+        }
+        page += "</table>";
+        main.innerHTML = page;
+      }
+
+      function memberPage() {
+        main.innerHTML = `<h1>${memberData[index].id}님 반갑습니다.</h1><input type="button" value="logout" onclick="logout()" /> <input type="button" value="update" onclick="updatePage()" />`;
+      }
+
+      function loginPage() {
+        main.innerHTML =
+          '<table><tr><td>ID:</td><td><input type="text" id="loginId" /></td></tr><tr><td>PW:</td><td><input type="password" id="loginPw" /></td></tr></table><input type="button" value="로그인" onclick="login()" /> <input type="button" value="회원가입" onclick="createPage()" />';
+      }
+
+      function detailPage(index) {
+        let member = memberData[index];
+        main.innerHTML = `<table><tr><td>ID:</td><td><input type="text" value="${member.id}" readonly /></td></tr><tr><td>PW:</td><td><input type="password" value="${member.password}" readonly /></td></tr><tr><td>NAME:</td><td><input type="text" value="${member.name}" readonly /></td></tr><tr><td></td><td><input type="checkbox" id="detailManager" disabled />관리자입니다.</td></tr></table><input type="button" value="돌아가기" onclick="adminPage()" />`;
+        document.getElementById("detailManager").checked = member.manager;
+      }
+
+      function updatePage() {
+        main.innerHTML = `<table><tr><td>ID:</td><td><input type="text" id="updateId" value="${memberData[index].id}" /></td></tr><tr><td>PW:</td><td><input type="password" id="updatePw" value="${memberData[index].password}" /></td></tr><tr><td>NAME:</td><td><input type="text" id="updateName" value="${memberData[index].name}" /></td></tr><tr><td></td><td><input type="checkbox" id="updateManager" />관리자입니다.</td></tr></table><input type="button" value="수정하기" onclick="update()" />`;
+        document.getElementById("updateManager").checked =
+          memberData[index].manager;
+      }
+
+      function createPage() {
+        main.innerHTML = `<table><tr><td>ID:</td><td><input type="text" id="createId" /></td></tr><tr><td>PW:</td><td><input type="password" id="createPw" /></td></tr><tr><td>NAME:</td><td><input type="text" id="createName" /></td></tr><tr><td></td><td><input type="checkbox" id="createManager" />관리자입니다.</td></tr></table><input type="button" value="회원가입" onclick="create()" />`;
+      }
+    </script>
+  </head>
+  <body>
+    <div id="main"></div>
+  </body>
+</html>

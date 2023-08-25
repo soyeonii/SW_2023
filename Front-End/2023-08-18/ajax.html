@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSON</title>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        // alert("jquery");
+        $("#btn1").on("click", function () {
+          // alert("jquery event");
+          $.ajax({
+            url: "./data.json",
+            success: function (data) {
+              alert(JSON.stringify(data));
+              // alert(data.employees.length);
+              // alert(data.employees[0].firstName);
+              // for의 3가지 형태로 이름과 성을 출력하시오.
+              for (let i = 0; i < data.employees.length; i++) {
+                console.log(
+                  data.employees[i].firstName,
+                  data.employees[i].lastName
+                );
+              }
+              for (let i in data.employees) {
+                console.log(
+                  data.employees[i].firstName,
+                  data.employees[i].lastName
+                );
+              }
+              for (let employee of data.employees) {
+                console.log(employee.firstName, employee.lastName);
+              }
+            },
+            error: function () {
+              console.log("error");
+            },
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <button id="btn1">jQuery Event</button>
+  </body>
+</html>

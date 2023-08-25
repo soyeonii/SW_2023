@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Join</title>
+    <style>
+      table {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+
+      td,
+      th {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+
+      #btn_submit {
+        text-align: center;
+      }
+    </style>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+      function checkId(e) {
+        let userId = document.getElementById("userId");
+        // alert(userId);
+        // userId.value = "check";
+        document.getElementById("isCheckId").value = true;
+        e.preventDefault();
+      }
+
+      function comparePwd(e) {
+        let pwd1 = document.getElementById("pwd1").value;
+        let pwd2 = document.getElementById("pwd2").value;
+        let msg = document.getElementById("msg");
+        if (pwd1 == pwd2) {
+          // alert("비밀번호 일치");
+          msg.innerHTML = "<h3>일치</h3>";
+        } else {
+          // alert("비밀번호 불일치");
+          msg.innerHTML = "<h3>불일치</h3>";
+        }
+        e.preventDefault();
+      }
+
+      function choiceTools() {
+        let tools = document.getElementsByName("tools");
+        alert(tools.length);
+        for (let tool of tools) {
+          if (tool.checked) {
+            alert(tool.value);
+          }
+        }
+      }
+
+      function comboBox() {
+        let choice = document.getElementById("combo");
+        alert(choice.value);
+      }
+
+      function submit(e) {
+        let flag = document.getElementById("isCheckId").value;
+        console.log(flag);
+        if (flag == "true") {
+          alert("check");
+        } else {
+          alert("not check");
+        }
+        e.preventDefault();
+      }
+
+      function findZipcode() {
+        new daum.Postcode({
+          oncomplete: function (data) {
+            alert(JSON.stringify(data));
+            document.getElementById("postcode").value = data.zonecode;
+            document.getElementById("addr1").value = data.address;
+            document.getElementById("addr2").focus();
+          },
+        }).open();
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Member Join Page</h1>
+    <form action="" method="">
+      <table>
+        <tr>
+          <th>구분</th>
+          <th>데이터수집</th>
+          <th>액션</th>
+          <th>기타</th>
+        </tr>
+        <tr>
+          <td>아이디</td>
+          <td><input type="text" value="admin" id="userId" /></td>
+          <td><button onclick="checkId(event)">ID 체크</button></td>
+          <td><input type="hidden" id="isCheckId" value="false" /></td>
+        </tr>
+        <tr>
+          <td>비밀번호</td>
+          <td><input type="password" id="pwd1" /> <span id="msg"></span></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>비번확인</td>
+          <td><input type="password" id="pwd2" /></td>
+          <td><button onclick="comparePwd(event)">비번 체크</button></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>우편번호</td>
+          <td>
+            <input type="text" id="postcode" />
+            <input
+              type="button"
+              value="우편번호 찾기"
+              onclick="findZipcode()"
+            />
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>기본주소</td>
+          <td><input type="text" size="40" id="addr1" /></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>상세주소</td>
+          <td><input type="text" id="addr2" /></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>전공</td>
+          <td>
+            <input type="radio" name="major" checked />소프트웨어공학
+            <input type="radio" name="major" />컴퓨터공학
+            <input type="radio" name="major" />컴퓨터과학
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>코딩툴</td>
+          <td>
+            <input type="checkbox" name="tools" value="eclipse" />eclipse
+            <input type="checkbox" name="tools" value="VSC" />VSC
+            <input
+              type="checkbox"
+              checked="checked"
+              name="tools"
+              value="JetBrain"
+            />JetBrain
+            <input
+              type="checkbox"
+              name="tools"
+              value="VisualStudio"
+            />VisualStudio
+          </td>
+          <td><button onclick="choiceTools(event)">툴 선택</button></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>세부전공</td>
+          <td>
+            <select onchange="comboBox()" id="combo">
+              <option selected>--선 택--</option>
+              <option value="1">DB 설계</option>
+              <option value="2">웹어플리케이션</option>
+              <option value="3">모바일 앱</option>
+              <option value="4">클라이언트 어플리케이션</option>
+            </select>
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>자신소개</td>
+          <td>
+            <textarea cols="40px" rows="5"></textarea>
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td colspan="4" id="btn_submit" onclick="submit(event)">
+            <input type="submit" value="가입" />
+          </td>
+        </tr>
+      </table>
+    </form>
+  </body>
+</html>

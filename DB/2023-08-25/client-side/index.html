@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>midtermLSY</title>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+      $(document).ready(() => loginPage());
+
+      //---------동작---------//
+      function login() {
+        fetch("http://localhost:8080/login", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: document.getElementById("loginId").value,
+            password: document.getElementById("loginPw").value,
+          }),
+        })
+          .then((response) => response.json())
+          .then((member) => {
+            if (member.manager) {
+              adminLogin();
+            } else {
+              memberLogin(member.id);
+            }
+          });
+      }
+
+      function adminLogin() {
+        fetch(`http://localhost:8080/`)
+          .then((response) => response.json())
+          .then((members) => {
+            adminPage(members);
+          });
+      }
+
+      function memberLogin(id) {
+        fetch(`http://localhost:8080/${id}`)
+          .then((response) => response.json())
+          .then((member) => {
+            memberPage(member);
+          });
+      }
+
+      function logout() {
+        loginPage();
+      }
+
+      // detail
+      function detail(id) {
+        fetch(`http://localhost:8080/${id}`)
+          .then((response) => response.json())
+          .then((member) => {
+            detailPage(member);
+          });
+      }
+
+      // create
+      function create() {
+        fetch("http://localhost:8080/join", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: document.getElementById("createId").value,
+            password: document.getElementById("createPw").value,
+            name: document.getElementById("createName").value,
+            manager: document.getElementById("createManager").checked,
+          }),
+        }).then((response) => loginPage());
+      }
+
+      // update
+      function update() {
+        let id = document.getElementById("updateId").value;
+        fetch(`http://localhost:8080/${id}`, {
+          method: "put",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            password: document.getElementById("updatePw").value,
+            name: document.getElementById("updateName").value,
+            manager: document.getElementById("updateManager").checked,
+          }),
+        }).then((response) => memberLogin(id));
+      }
+
+      function updateForm(id) {
+        fetch(`http://localhost:8080/${id}`)
+          .then((response) => response.json())
+          .then((member) => updatePage(member));
+      }
+
+      // delete
+      function remove(id) {
+        fetch(`http://localhost:8080/${id}`, {
+          method: "delete",
+        })
+          .then((response) => response.json())
+          .then((result) => {
+            console.log(result);
+            adminLogin();
+          });
+      }
+
+      //---------화면---------//
+      function adminPage(members) {
+        let page =
+          '<input type="button" id="logout" value="logout" onclick="logout()" /> <table>';
+        for (let i in members) {
+          page += `<tr><td>${members[i].id}</td><td>${members[i].name}</td><td>${members[i].manager}</td><td><input type="button" value="조회" onclick="detail('${members[i].id}')" /></td><td><input type="button" value="삭제" onclick="remove('${members[i].id}')" /></td></tr>`;
+        }
+        page += "</table>";
+        main.innerHTML = page;
+      }
+
+      function memberPage(member) {
+        main.innerHTML = `<h1>${member.id}님 반갑습니다.</h1><input type="button" value="logout" onclick="logout()" /> <input type="button" value="update" onclick="updateForm('${member.id}')" />`;
+      }
+
+      function loginPage() {
+        main.innerHTML =
+          '<table><tr><td>ID:</td><td><input type="text" id="loginId" /></td></tr><tr><td>PW:</td><td><input type="password" id="loginPw" /></td></tr></table><input type="button" value="로그인" onclick="login()" /> <input type="button" value="회원가입" onclick="createPage()" />';
+      }
+
+      function detailPage(member) {
+        main.innerHTML = `<table><tr><td>ID:</td><td><input type="text" value="${member.id}" readonly /></td></tr><tr><td>PW:</td><td><input type="password" value="${member.password}" readonly /></td></tr><tr><td>NAME:</td><td><input type="text" value="${member.name}" readonly /></td></tr><tr><td></td><td><input type="checkbox" id="detailManager" disabled />관리자입니다.</td></tr></table><input type="button" value="돌아가기" onclick="adminLogin()" />`;
+        document.getElementById("detailManager").checked = member.manager;
+      }
+
+      function updatePage(member) {
+        main.innerHTML = `<table><tr><td>ID:</td><td><input type="text" id="updateId" value="${member.id}" /></td></tr><tr><td>PW:</td><td><input type="password" id="updatePw" value="${member.password}" /></td></tr><tr><td>NAME:</td><td><input type="text" id="updateName" value="${member.name}" /></td></tr><tr><td></td><td><input type="checkbox" id="updateManager" />관리자입니다.</td></tr></table><input type="button" value="수정하기" onclick="update()" />`;
+        document.getElementById("updateManager").checked = member.manager;
+      }
+
+      function createPage() {
+        main.innerHTML = `<table><tr><td>ID:</td><td><input type="text" id="createId" /></td></tr><tr><td>PW:</td><td><input type="password" id="createPw" /></td></tr><tr><td>NAME:</td><td><input type="text" id="createName" /></td></tr><tr><td></td><td><input type="checkbox" id="createManager" />관리자입니다.</td></tr></table><input type="button" value="회원가입" onclick="create()" />`;
+      }
+    </script>
+  </head>
+  <body>
+    <div id="main"></div>
+  </body>
+</html>

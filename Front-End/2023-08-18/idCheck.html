@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ID Check</title>
+    <style>
+      span {
+        font-size: 30px;
+      }
+
+      td {
+        color: hotpink;
+        font: bold;
+      }
+    </style>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#btn").on("click", function () {
+          $.ajax({
+            success: function () {
+              let userId = document.getElementById("userId").value;
+              let message = document.getElementById("message");
+              if (
+                8 <= userId.length &&
+                userId.length <= 12 &&
+                isNaN(userId[0])
+              ) {
+                message.innerHTML = "😊";
+              } else {
+                message.innerHTML = "😢";
+              }
+              alert("id check 수행했습니다.");
+            },
+            error: function () {
+              console.log("error");
+            },
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td>아이디:</td>
+        <td>
+          <input type="text" id="userId" />
+        </td>
+        <td>
+          <button id="btn">제출</button>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><span id="message"></span></td>
+        <td></td>
+      </tr>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendar</title>
+    <script>
+      function makeCalendar() {
+        // alert("calendar");
+        let year = document.getElementById("year").value;
+        let month = document.getElementById("month").value;
+        let element = document.getElementById("position");
+        element.innerHTML = "<h3>" + year + "년 " + month + "월</h3>";
+
+        let date1 = new Date(year, month - 1, 1);
+        let space = date1.getDay();
+        let date2 = new Date(year, month, 0);
+        let lastDay = date2.getDate();
+
+        let myCalendar =
+          '<table><tr><th class="day_red">일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th class="day_blue">토</th><tr>';
+        for (let i = 0; i < space; i++) {
+          myCalendar += "<td></td>";
+        }
+        for (let day = 1; day <= lastDay; day++) {
+          myCalendar += "<td>" + day + "</td>";
+          if ((space + day) % 7 == 0) {
+            myCalendar += "</tr><tr>";
+          }
+        }
+        myCalendar += "</tr></table>";
+        console.log(makeCalendar);
+
+        element.innerHTML = myCalendar;
+      }
+
+      function userData() {
+        let year = Number(document.getElementById("year").value);
+        let month = Number(document.getElementById("month").value);
+
+        console.log(year + month);
+      }
+
+      function checkDate() {
+        let dateInfo = new Date(2023, 2, 0); //  마지막날
+        console.log(dateInfo.getDate());
+        console.log(dateInfo.getDay());
+      }
+    </script>
+  </head>
+  <body onload="checkDate()">
+    <table>
+      <tr>
+        <td><input type="text" id="year" size="5" />년</td>
+        <td><input type="text" id="month" size="5" />월</td>
+        <td>
+          <input type="button" value="달력 만들기" onclick="makeCalendar()" />
+        </td>
+      </tr>
+      <tr>
+        <td id="position" colspan="3"></td>
+      </tr>
+    </table>
+  </body>
+</html>

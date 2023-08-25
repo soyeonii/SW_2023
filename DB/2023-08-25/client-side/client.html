@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Client</title>
+    <script>
+      function searchAll() {
+        fetch("http://localhost:8080/").then((response) => {
+          const data = response.json();
+          console.log(data);
+        });
+      }
+
+      function find() {
+        fetch("http://localhost:8080/admin").then((response) => {
+          const data = response.json();
+          console.log(data);
+        });
+      }
+
+      function create() {
+        fetch("http://localhost:8080/", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: "user3",
+            password: "1234",
+            name: "teddy",
+          }),
+        }).then((response) => {
+          const data = response.json();
+          console.log(data);
+        });
+      }
+
+      function update() {
+        fetch("http://localhost:8080/user1", {
+          method: "put",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            password: "1234",
+            name: "soyeon",
+          }),
+        }).then((response) => {
+          const data = response.json();
+          console.log(data);
+        });
+      }
+
+      function remove() {
+        fetch("http://localhost:8080/user2", {
+          method: "delete",
+        }).then((response) => {
+          const data = response.json();
+          console.log(data);
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <button onclick="searchAll()">전체조회</button>
+    <button onclick="find()">상세조회</button>
+    <button onclick="create()">생성</button>
+    <button onclick="update()">수정</button>
+    <button onclick="remove()">삭제</button>
+  </body>
+</html>

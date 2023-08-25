@@ -1,0 +1,16 @@
+{
+  "employees": [
+    {
+      "firstName": "Soyeon",
+      "lastName": "Lee"
+    },
+    {
+      "firstName": "Namyi",
+      "lastName": "Kim"
+    },
+    {
+      "firstName": "JaePoong",
+      "lastName": "Choi"
+    }
+  ]
+}
