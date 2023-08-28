@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gisa</title>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+      function f(i) {
+        let query = $(`#query${i}`).val();
+        query = query.replaceAll(" ", "+");
+        console.log(query);
+        fetch(`http://localhost:8080/${query}`)
+          .then((response) => response.json())
+          .then((result) => {
+            console.log(result);
+            $(`#result${i}`).html(result[Object.keys(result)[0]]);
+          });
+      }
+    </script>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>문제</th>
+        <th>쿼리</th>
+        <th>결과</th>
+        <th>정답</th>
+      </tr>
+      <tr>
+        <td>1번</td>
+        <td>
+          <input type="text" id="query1" style="width: 400px; height: 100px" />
+        </td>
+        <td>
+          <button id="button1" onclick="f(1)">채점</button>
+          <div id="result1"></div>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>2번</td>
+        <td>
+          <input type="text" id="query2" style="width: 400px; height: 100px" />
+        </td>
+        <td>
+          <button id="button2" onclick="f(2)">채점</button>
+          <div id="result2"></div>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>3번</td>
+        <td>
+          <input type="text" id="query3" style="width: 400px; height: 100px" />
+        </td>
+        <td>
+          <button id="button3" onclick="f(3)">채점</button>
+          <div id="result3"></div>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>4번</td>
+        <td>
+          <input type="text" id="query4" style="width: 400px; height: 100px" />
+        </td>
+        <td>
+          <button id="button4" onclick="f(4)">채점</button>
+          <div id="result4"></div>
+        </td>
+        <td></td>
+      </tr>
+    </table>
+  </body>
+</html>
