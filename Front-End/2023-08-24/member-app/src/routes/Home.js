@@ -6,7 +6,7 @@ function Home() {
 
   useEffect(() => {
     navigate("/users");
-  }, []);
+  }, [navigate]);
 }
 
 export default Home;

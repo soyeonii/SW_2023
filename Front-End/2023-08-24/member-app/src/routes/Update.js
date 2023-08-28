@@ -30,7 +30,7 @@ function Update() {
     if (location.state === null) {
       navigate("/users");
     }
-  }, []);
+  }, [location.state, navigate]);
 
   if (location.state) {
     return (
