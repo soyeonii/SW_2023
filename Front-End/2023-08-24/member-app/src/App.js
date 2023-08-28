@@ -2,11 +2,9 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import Home from "./routes/Home";
-import Login from "./routes/Login";
 import Join from "./routes/Join";
-import AdminPage from "./routes/AdminPage";
+import Read from "./routes/Read";
 import Detail from "./routes/Detail";
-import MemberPage from "./routes/MemberPage";
 import Update from "./routes/Update";
 
 function App() {
@@ -15,11 +13,9 @@ function App() {
       <Navigation />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/users" element={<Read />} />
         <Route path="/join" element={<Join />} />
-        <Route path="/admin" element={<AdminPage />} />
         <Route path="/detail" element={<Detail />} />
-        <Route path="/member" element={<MemberPage />} />
         <Route path="/update" element={<Update />} />
       </Routes>
     </BrowserRouter>

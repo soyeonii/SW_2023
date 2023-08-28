@@ -8,10 +8,10 @@ function Navigation() {
         <tbody>
           <tr>
             <td>
-              <Link to="/admin">Admin</Link>
+              <Link to="/users">전체조회</Link>
             </td>
             <td>
-              <Link to="/member">Member</Link>
+              <Link to="/join">회원가입</Link>
             </td>
           </tr>
         </tbody>

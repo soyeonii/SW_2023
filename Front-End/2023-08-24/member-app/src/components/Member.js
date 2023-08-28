@@ -10,7 +10,7 @@ function Member({ id, password, name, manager }) {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        window.location.replace("/admin");
+        window.location.replace("/users");
       });
   };
 
@@ -21,7 +21,12 @@ function Member({ id, password, name, manager }) {
       <td>{manager ? "true" : "false"}</td>
       <td>
         <Link to="/detail" state={{ id, password, name, manager }}>
-          <input type="button" value="조회" />
+          <button>조회</button>
+        </Link>
+      </td>
+      <td>
+        <Link to="/update" state={{ id, password, name, manager }}>
+          <button>수정</button>
         </Link>
       </td>
       <td>

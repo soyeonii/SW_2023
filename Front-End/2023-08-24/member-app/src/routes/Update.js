@@ -21,14 +21,14 @@ function Update() {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        navigate("/member");
+        navigate("/users");
       })
       .catch((e) => console.log(e));
   };
 
   useEffect(() => {
     if (location.state === null) {
-      navigate("/member");
+      navigate("/users");
     }
   }, []);
 

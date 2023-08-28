@@ -5,7 +5,7 @@ function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate("/login");
+    navigate("/users");
   }, []);
 }
 

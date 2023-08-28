@@ -7,12 +7,12 @@ function Detail() {
   const navigate = useNavigate();
 
   const handleFormSubmit = ({ userId, userPw, userName, userManager }) => {
-    navigate("/admin");
+    navigate("/users");
   };
 
   useEffect(() => {
     if (location.state === null) {
-      navigate("/admin");
+      navigate("/users");
     }
   }, []);
 
