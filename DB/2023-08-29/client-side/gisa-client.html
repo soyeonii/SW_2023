@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gisa</title>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $(document).on("click", ".evaluate", (e) => {
+          let index = e.target.id.charAt(6);
+          fetch(`http://localhost:8080/quiz`, {
+            method: "post",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              quiz_number: index,
+              query: $(`#query${index}`).val(),
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              $(`#result${index}`).html(
+                `${data.tryAnswer} ${
+                  data.isCorrect ? " 정답 Correct " : " 오답 Incorrect "
+                }`
+              );
+              $(`#correct${index}`).html(` | ${data.correctAnswer} `);
+              console.log(data);
+            })
+            .catch((err) => console.log(err));
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>문제</th>
+        <th>쿼리</th>
+        <th>결과</th>
+        <th>정답</th>
+      </tr>
+      <tr>
+        <td>1번</td>
+        <td>
+          <textarea id="query1" cols="50" rows="6"></textarea>
+        </td>
+        <td>
+          <button id="submit1" class="evaluate">채점</button>
+          <span id="result1"></span>
+        </td>
+        <td>
+          <span id="correct1"></span>
+        </td>
+      </tr>
+      <tr>
+        <td>2번</td>
+        <td>
+          <textarea id="query2" cols="50" rows="6"></textarea>
+        </td>
+        <td>
+          <button id="submit2" class="evaluate">채점</button>
+          <span id="result2"></span>
+        </td>
+        <td>
+          <span id="correct2"></span>
+        </td>
+      </tr>
+      <tr>
+        <td>3번</td>
+        <td>
+          <textarea id="query3" cols="50" rows="6"></textarea>
+        </td>
+        <td>
+          <button id="submit3" class="evaluate">채점</button>
+          <span id="result3"></span>
+        </td>
+        <td>
+          <span id="correct3"></span>
+        </td>
+      </tr>
+      <tr>
+        <td>4번</td>
+        <td>
+          <textarea id="query4" cols="50" rows="6"></textarea>
+        </td>
+        <td>
+          <button id="submit4" class="evaluate">채점</button>
+          <span id="result4"></span>
+        </td>
+        <td>
+          <span id="correct4"></span>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
