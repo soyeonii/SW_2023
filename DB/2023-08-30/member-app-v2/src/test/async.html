@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Async</title>
+    <script>
+      function working(callback) {
+        let value;
+        setTimeout(() => {
+          value = 100;
+          callback(value);
+        }, 3000);
+        //document.getElementById('result').innerHTML =`<h1>${value}</h1>`;
+      }
+      function working2() {
+        return new Promise((resolve, reject) => {
+          let value;
+          setTimeout(() => {
+            value = 200;
+            resolve(value);
+          }, 3000);
+        });
+      }
+      function working3(value) {
+        return new Promise((resolve, reject) => {
+          //let value;
+          setTimeout(() => {
+            value *= 3;
+            resolve(value);
+          }, 5000);
+        });
+      }
+
+      async function myWork() {
+        let value = await working2();
+        document.getElementById("result").innerHTML = `<h1>${value}</h1>`;
+        let value2 = await working3(value);
+        document.getElementById("result2").innerHTML = `<h1>${value2}</h1>`;
+      }
+
+      function doWork() {
+        myWork();
+        // working2()
+        // .then(result=>{
+        //     document.getElementById('result').innerHTML=`<h1>${result}</h1>`;
+        // })
+        // working(function(value){
+        //     document.getElementById('result').innerHTML =`<h1>${value}</h1>`;
+        // });
+      }
+    </script>
+  </head>
+  <body>
+    <button onclick="doWork()">doWork</button>
+    <div id="result"></div>
+    <div id="result2"></div>
+  </body>
+</html>
