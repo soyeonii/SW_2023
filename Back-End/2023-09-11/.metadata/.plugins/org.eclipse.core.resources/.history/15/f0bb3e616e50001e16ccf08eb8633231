@@ -1,0 +1,9 @@
+package com.angkko.main;
+
+import java.io.BufferedReader;
+
+public class MainForAssembler {
+	public static void main(String[] args) {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+	}
+}

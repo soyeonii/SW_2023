@@ -1,0 +1,30 @@
+package com.angkko.assembler;
+
+import com.angkko.service.ChangePasswordService;
+import com.angkko.service.MemberDao;
+import com.angkko.service.MemberRegisterService;
+
+public class Assembler {
+	private MemberDao memberDao;
+	private MemberRegisterService regSvc;
+	private ChangePasswordService pwdSvc;
+
+	public Assembler() {
+		memberDao = new MemberDao();
+		regSvc = new MemberRegisterService(memberDao);
+		pwdSvc = new ChangePasswordService();
+		pwdSvc.setMemberDao(memberDao);
+	}
+
+	public MemberDao getMemberDao() {
+		return memberDao;
+	}
+
+	public MemberRegisterService getRegSvc() {
+		return regSvc;
+	}
+
+	public ChangePasswordService getPwdSvc() {
+		return pwdSvc;
+	}
+}

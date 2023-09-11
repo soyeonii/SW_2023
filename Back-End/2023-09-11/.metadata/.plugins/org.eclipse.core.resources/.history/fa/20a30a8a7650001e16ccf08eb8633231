@@ -1,0 +1,7 @@
+package com.angkko.service;
+
+public class MemberListPrint {
+	private MemberDao memberDao;
+	private MemberPrinter printer;
+	
+}

@@ -1,0 +1,28 @@
+package com.angkko.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import com.angkko.service.ChangePasswordService;
+import com.angkko.service.MemberDao;
+import com.angkko.service.MemberRegisterService;
+
+@Configuration
+public class ApppCtx {
+	@Bean
+	public MemberDao memberDao() {
+		return new MemberDao();
+	}
+	
+	@Bean
+	public MemberRegisterService memberRegSvc() {
+		return new MemberRegisterService(memberDao());
+	}
+	
+	@Bean
+	public ChangePasswordService changePwdSvc() {
+		ChangePasswordService pwdSvc = new ChangePasswordService();
+		pwdSvc.setMemberDao(memberDao());
+		return pwdSvc;
+	}
+}
