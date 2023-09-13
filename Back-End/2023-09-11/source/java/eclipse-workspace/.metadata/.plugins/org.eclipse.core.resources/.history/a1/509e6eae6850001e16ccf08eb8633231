@@ -1,0 +1,5 @@
+package com.angkko.model;
+
+public class Member {
+
+}

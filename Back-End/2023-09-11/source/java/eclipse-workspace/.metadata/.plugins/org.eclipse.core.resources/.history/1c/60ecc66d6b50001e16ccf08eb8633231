@@ -1,0 +1,10 @@
+package com.angkko.service;
+
+public class MemberRegisterService {
+	private MemberDao memberDao = new MemberDao();
+	
+	public long regist(RegisterRequest req) {
+		Member member = memberDao.selectByEmail(req.getEmail());
+		
+	}
+}
