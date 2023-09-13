@@ -1,0 +1,10 @@
+package com.angkko.controller;
+
+import org.springframework.stereotype.Controller;
+
+// 1. ComponentScan 대상이 됨
+// 2. Controller임을 명시
+@Controller
+public class HelloController {
+	
+}

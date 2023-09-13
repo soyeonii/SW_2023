@@ -1,0 +1,12 @@
+package com.angkko.service;
+
+import java.util.List;
+
+import com.angkko.model.BoardDao;
+
+public class BoardService {
+	private BoardDao boardDao;
+	
+	public List<NoticeboardDto> articleList = boardDao.selectAllArticles();
+	return articleList;
+}

@@ -1,0 +1,19 @@
+package com.angkko.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import com.angkko.model.NoticeboardDto;
+
+@Configuration
+public class BoardConfig {
+	@Bean
+	public NoticeboardDto noticeboardDto() {
+		return new NoticeboardDto();
+	}
+	
+	@Bean
+	public BoardDao noticeboardDto() {
+		return new NoticeboardDto();
+	}
+}

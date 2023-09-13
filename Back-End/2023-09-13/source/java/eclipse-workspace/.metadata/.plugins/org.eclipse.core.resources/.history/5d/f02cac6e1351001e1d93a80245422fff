@@ -1,0 +1,12 @@
+package com.angkko.main;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+
+import com.angkko.config.ConcertConfig;
+
+public class ConcertMain {
+	public static void main(String[] args) {
+		AbstractApplicationContext ctx = new AnnotationConfigApplicationContext(ConcertConfig.class);
+	}
+}

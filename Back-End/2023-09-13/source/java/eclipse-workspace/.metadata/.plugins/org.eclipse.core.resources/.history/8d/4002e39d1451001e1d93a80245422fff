@@ -1,0 +1,8 @@
+package com.angkko.concert;
+
+import org.springframework.stereotype.Component;
+
+@Component("iuConcert")
+public class IUConcert implements Performance {
+
+}

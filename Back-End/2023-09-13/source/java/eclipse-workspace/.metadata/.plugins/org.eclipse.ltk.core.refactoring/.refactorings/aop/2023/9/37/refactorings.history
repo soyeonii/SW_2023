@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename package &apos;aop.com.angkko.concert&apos; to &apos;com.angkko.concert&apos;&#x0D;&#x0A;- Original project: &apos;aop&apos;&#x0D;&#x0A;- Original element: &apos;aop/src/main/java/aop.com.angkko.concert&apos;&#x0D;&#x0A;- Renamed element: &apos;aop/src/main/java/com.angkko.concert&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename package &apos;aop.com.angkko.concert&apos;" flags="589830" hierarchical="false" id="org.eclipse.jdt.ui.rename.package" input="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;aop.com.angkko.concert" name="com.angkko.concert" qualified="false" references="true" stamp="1694482968893" textual="false" version="1.0"/>
+</session>

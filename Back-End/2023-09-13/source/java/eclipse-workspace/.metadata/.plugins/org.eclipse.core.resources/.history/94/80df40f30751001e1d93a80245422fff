@@ -1,0 +1,65 @@
+package com.angkko.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import com.angkko.service.ChangePasswordService;
+import com.angkko.service.MemberDao;
+import com.angkko.service.MemberInfoPrinter;
+import com.angkko.service.MemberListPrinter;
+import com.angkko.service.MemberPrinter;
+import com.angkko.service.MemberRegisterService;
+import com.angkko.service.VersionPrinter;
+
+@Configuration
+public class AppCtx {
+	@Bean
+	public MemberDao memberDao() {
+		return new MemberDao();
+	}
+	
+	@Bean
+	public MemberRegisterService memberRegSvc() {
+//		return new MemberRegisterService(memberDao());
+		return new MemberRegisterService();
+	}
+	
+	@Bean
+	public ChangePasswordService changePwdSvc() {
+		ChangePasswordService pwdSvc = new ChangePasswordService();
+//		pwdSvc.setMemberDao(memberDao());
+		return pwdSvc;
+	}
+	
+//	@Bean
+//	public MemberPrinter memberPrinter() {
+//		return new MemberPrinter();
+//	}
+	
+	@Bean
+	public MemberPrinter memberPrinter() {
+		return new MemberPrinter();
+	}
+	
+	@Bean
+	public MemberListPrinter listPrinter() {
+//		return new MemberListPrinter(memberDao(), memberPrinter());
+		return new MemberListPrinter();
+	}
+	
+	@Bean
+	public MemberInfoPrinter infoPrinter() {
+		MemberInfoPrinter infoPrinter = new MemberInfoPrinter();
+//		infoPrinter.setMemberDao(memberDao());
+//		infoPrinter.setPrinter(memberPrinter());
+		return infoPrinter;
+	}
+	
+	@Bean
+	public VersionPrinter versionPrinter() {
+		VersionPrinter versionPrinter = new VersionPrinter();
+		versionPrinter.setMajorVersion(5);
+		versionPrinter.setMinorVersion(0);
+		return versionPrinter;
+	}
+}

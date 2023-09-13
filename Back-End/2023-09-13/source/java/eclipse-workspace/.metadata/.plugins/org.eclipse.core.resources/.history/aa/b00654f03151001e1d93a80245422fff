@@ -1,0 +1,9 @@
+package com.angkko.model;
+
+public class NoticeboardDto {
+	private int article_no;
+	private String title;
+	private String content;
+	private String write_date;
+	private String write_id;
+}

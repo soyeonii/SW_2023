@@ -1,0 +1,32 @@
+package com.angkko.service;
+
+import java.time.LocalDateTime;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.angkko.model.Member;
+
+@Component
+public class MemberRegisterService {
+	@Autowired
+	private MemberDao memberDao;
+
+	public MemberRegisterService() {
+	}
+
+	public MemberRegisterService(MemberDao memberDao) {
+		this.memberDao = memberDao;
+	}
+
+	public long regist(RegisterRequest req) {
+		Member member = memberDao.selectByEmail(req.getEmail());
+		if (member != null) {
+			throw new DuplicateMemberException("Duplicated Email: " + req.getEmail());
+		}
+		Member newMember = new Member(req.getEmail(), req.getPassword(), req.getName(), LocalDateTime.now());
+		memberDao.insert(newMember);
+		newMember = memberDao.selectByEmail(newMember.getEmail());
+		return newMember.getId();
+	}
+}

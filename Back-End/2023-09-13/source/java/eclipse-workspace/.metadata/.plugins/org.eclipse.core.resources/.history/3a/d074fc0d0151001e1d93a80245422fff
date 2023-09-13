@@ -1,0 +1,10 @@
+package com.angkko.service;
+
+public class MemberInfoPrinter {
+	private MemberDao memberDao;
+	private MemberPrinter memberPrinter;
+	
+	public void printMemberInfo(string email) {
+		
+	}
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.notice">
+	<resultMap type="noticeboardDto" id="noticeResult">
+		<result property="article_no" column="article_no"/>
+		<result property="article_no" column="article_no"/>
+		<result property="article_no" column="article_no"/>
+		<result property="article_no" column="article_no"/>
+		<result property="article_no" column="article_no"/>
+	</resultMap>
+</mapper>

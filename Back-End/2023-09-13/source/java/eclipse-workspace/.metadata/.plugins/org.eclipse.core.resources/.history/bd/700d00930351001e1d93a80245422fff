@@ -1,0 +1,10 @@
+package com.angkko.service;
+
+public class VersionPrinter {
+	private int majorVersion;
+	private int minorVersion;
+	
+	public void print() {
+		
+	}
+}

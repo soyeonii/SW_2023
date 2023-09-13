@@ -1,0 +1,17 @@
+package com.angkko.concert;
+
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+
+@Aspect
+public class Audience {
+	@Before("execution(* com.angkko.concert.Performance.perform(..))")
+	public void silencedCellPhone() {
+		System.out.println("Silencing cell phones");
+	}
+	
+	@Before("execution(* com.angkko.concert.Performance.perform(..))")
+	public void takeSeats() {
+		System.out.println("Taking seats");
+	}
+}
