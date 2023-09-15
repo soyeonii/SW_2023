@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>글 목록</title>
+    <style>
+      .cls2 {
+        text-align: center;
+        font-size: 30px;
+        display: block;
+      }
+
+      .cls1 {
+        text-decoration: none;
+      }
+
+      ul {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      ul li {
+        list-style-type: none;
+        display: inline-block;
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <a sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
+    <a sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
+    <a th:href="@{/user/signup}">회원가입</a>
+    <table align="center" border="1" width="80%">
+      <thead>
+        <tr height="10" align="center" bgcolor="lightgreen">
+          <th>글 번호</th>
+          <th>작성자</th>
+          <th>제목</th>
+          <th>작성일</th>
+        </tr>
+      </thead>
+      <tbody th:if="${#strings.isEmpty(dataList)}">
+        <tr height="10">
+          <td colspan="4">
+            <p align="center">
+              <b>
+                <span style="font-size: 20pt"> 등록된 글이 없습니다. </span>
+              </b>
+            </p>
+          </td>
+        </tr>
+      </tbody>
+      <tbody th:unless="${#strings.isEmpty(dataList)}">
+        <tr align="center" th:each="article:${dataList}">
+          <td width="5%">[[${articleStat.count}]]</td>
+          <td width="10%">[[${article.writer.username}]]</td>
+          <td align="left" width="35%">
+            <span style="padding-right: 30px"></span>
+            <a class="cls1" th:href="@{/sku/view(no=${article.id})}">
+              [[${article.title}]]
+            </a>
+          </td>
+          <td width="10%">[[${article.writeDate}]]</td>
+        </tr>
+      </tbody>
+    </table>
+    <a th:href="@{/sku/add}" class="cls1">
+      <span class="cls2">글쓰기</span>
+    </a>
+
+    <div th:if="${!dataList.isEmpty()}">
+      <ul
+        class="pagination"
+        th:with="
+              pageNumber = ${dataList.pageable.pageNumber},
+              pageSize = ${dataList.pageable.pageSize},
+              totalPages = ${dataList.totalPages},
+              startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+              tempEndPage = ${startPage + pageSize - 1},
+              endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})"
+      >
+        <li th:classappend="${dataList.first} ? 'disabled'" class="page-item">
+          <a
+            class="page-link"
+            th:href="${dataList.first} ? '#' : @{/sku/list(page=${pageNumber - 1})}"
+          >
+            <span aria-hidden="true">&lt;</span>
+          </a>
+        </li>
+
+        <li
+          th:each="page: ${#numbers.sequence(startPage, endPage)}"
+          th:classappend="${page == pageNumber + 1} ? 'active'"
+          class="page-item"
+        >
+          <a
+            th:text="${page}"
+            class="page-link"
+            th:href="@{/sku/list(page=${page - 1})}"
+          ></a>
+        </li>
+
+        <li th:classappend="${dataList.last} ? 'disabled'" class="page-item">
+          <a
+            class="page-link"
+            th:href="${dataList.last} ? '#' : @{/sku/list(page=${pageNumber + 1})}"
+            aria-label="Next"
+          >
+            <span aria-hidden="true">&gt;</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
