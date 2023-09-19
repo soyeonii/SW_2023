@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>글 목록</title>
+    <style>
+      .cls2 {
+        text-align: center;
+        font-size: 30px;
+        display: block;
+      }
+
+      .cls1 {
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <table align="center" border="1" width="80%">
+      <thead>
+        <tr height="10" align="center" bgcolor="lightgreen">
+          <th>글 번호</th>
+          <th>작성자</th>
+          <th>제목</th>
+          <th>작성일</th>
+        </tr>
+      </thead>
+      {% if not article_list %}
+      <tbody>
+        <tr height="10">
+          <td colspan="4">
+            <p align="center">
+              <b>
+                <span style="font-size: 20pt"> 등록된 글이 없습니다. </span>
+              </b>
+            </p>
+          </td>
+        </tr>
+      </tbody>
+      {% else %}
+      <tbody>
+        {% for article in article_list %}
+        <tr align="center">
+          <td width="5%">{{forloop.counter}}</td>
+          <td width="10%">{{article.write_id}}</td>
+          <td align="left" width="35%">
+            <span style="padding-right: 30px"></span>
+            <a class="cls1" href="{% url 'board:view_article' article.id %}">
+              {{article.title}}
+            </a>
+          </td>
+          <td width="10%">{{article.write_date}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      {% endif %}
+    </table>
+    <a href="{% url 'board:write_article' %}" class="cls1">
+      <span class="cls2">글쓰기</span>
+    </a>
+  </body>
+</html>
