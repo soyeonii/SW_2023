@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sku.mapper.BoardMapper">
+    <select id="selectAll" resultType="boardDTO">
+        SELECT *
+        FROM `board2`.`board`
+                 INNER JOIN user
+                            ON board.writer_id = user.id
+    </select>
+
+    <select id="selectOne" parameterType="int" resultType="boardDTO">
+        SELECT *
+        FROM `board2`.`board`
+                 INNER JOIN user
+                            ON board.writer_id = user.id
+        WHERE `board`.`id` = #{id}
+    </select>
+
+    <insert id="insert" parameterType="boardDTO">
+        INSERT INTO `board2`.`board` (`title`, `content`, `entry_date`, `writer_id`, `modify_date`)
+        VALUES (#{title}, #{content}, NOW(), #{writerId}, NOW())
+    </insert>
+
+    <update id="update" parameterType="com.sku.demo.model.BoardDTO">
+        UPDATE `board`
+        SET `title`      = #{title},
+            `content`    = #{content},
+            `entry_date` = NOW(),
+            WHERE `id` = #{id}
+    </update>
+</mapper>
