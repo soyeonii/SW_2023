@@ -1,0 +1,21 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: user
+  datasource:
+    url: jdbc:mysql://host.docker.internal:3306/board2?useSSl=false
+    #    url: jdbc:mysql://localhost:3306/board2?useSsl=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 1234
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      #defaultZone: http://172.17.0.2:8080/eureka
+      defaultZone: http://localhost:8080/eureka

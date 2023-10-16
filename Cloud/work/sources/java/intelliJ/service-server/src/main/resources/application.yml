@@ -1,0 +1,21 @@
+server:
+  port: 8080
+
+ #스프링 서비스 이름
+spring:
+  application:
+  name: service-server
+
+#Eureka 서버 설정
+eureka:
+  server:
+    wait-time-in-ms-when-sync-empty: 5000
+  client:
+      register-with-eureka: false
+      fetch-registry: false
+      serviceUrl:
+        defaultZone: http://localhost:8080/eureka
+
+
+
+
